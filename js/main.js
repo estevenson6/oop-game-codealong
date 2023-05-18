@@ -30,10 +30,12 @@ class Player {
         this.domElement.style.left = this.positionX + "vw";
     }
 }
-
+function generateRandomNumber(min, max) {
+    return (Math.random() * (max - min + 1)) + min;
+}
 class Obstacle {
     constructor() {
-        this.positionX = 50;
+        this.positionX = generateRandomNumber(0, 70); // change to be minus width
         this.positionY = 100;
         this.width = 30;
         this.height = 10; 
