@@ -76,8 +76,19 @@ setInterval(() => {
 setInterval(() => {
 obstaclesArr.forEach((obstacleInstance) => {
 obstacleInstance.moveDown()
-})
+
+if (
+    obstacleInstance.positionX < player.positionX + player.width &&
+    obstacleInstance.positionX + obstacleInstance.width > player.positionX &&
+    obstacleInstance.positionY < player.positionY + player.height &&
+    obstacleInstance.height + obstacleInstance.positionY > player.positionY) 
+    {
+    // window.open('https://giphy.com/gifs/yTkRGBhLx5osg', '_blank');
+}
+});
 }, 60)
+
+
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
