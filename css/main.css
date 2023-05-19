@@ -1,21 +1,25 @@
 body {
+    background-image: url('./Zelda\ Image.webp');
     background-color: #ffe09c;
     margin: 0;
     padding: 0;
 }
 #board {
+    background-image: url('./Zelda\ Image.webp');
     background-color: rgb(187, 230, 247);
     height: 100vh;
     position: relative;
-    overflow: hidden;
 }
 
 #player {
+    background-image: url('./Link\ funny.jpg');
     background-color: green;
+    background-size:100%;
     position: absolute;
 }
 
 .obstacle {
+    background-image: url('./Pocket_Cucco_-_OOT64_Get_Item_model.jpg');
     background-color: rgb(236, 88, 3);
     position: absolute;
 }
