@@ -1,9 +1,65 @@
+class Game {
+    constructor() {
+        this.player = null;
+        this.obstaclesArr = [];
+    }
+
+    start() { 
+        this.player = new Player;
+        this.attachEventListeners();
+        
+        setInterval(() => {
+            const newObstacle = new Obstacle();
+            this.obstaclesArr.push(newObstacle)
+        }, 2000);
+
+        setInterval(() => {
+            this.obstaclesArr.forEach((obstacleInstance) => {
+                obstacleInstance.moveDown()
+                this.detectCollision(obstacleInstance)
+                this.removeObstacle(obstacleInstance)
+            });
+        }, 60)
+        }
+
+    detectCollision(obstacleInstance) {
+        if (
+            obstacleInstance.positionX < this.player.positionX + this.player.width &&
+            obstacleInstance.positionX + obstacleInstance.width > this.player.positionX &&
+            obstacleInstance.positionY < this.player.positionY + this.player.height &&
+            obstacleInstance.height + obstacleInstance.positionY > this.player.positionY) {
+            console.log("Well done! You set it on fire!")
+            obstacleInstance.domElement.remove()
+        }
+        
+    }
+
+    removeObstacle(obstacleInstance) {
+        if (obstacleInstance.positionY < 0 - obstacleInstance.height) {
+            obstacleInstance.domElement.remove()
+            this.obstaclesArr.shift(obstacleInstance);
+        }
+    }
+    attachEventListeners() {
+        {
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowLeft") {
+                    game.player.moveLeft()
+                }
+                else if (e.key === "ArrowRight") {
+                    game.player.moveRight()
+                }
+            })
+        }
+    }
+}
+
 class Player {
     constructor() {
         this.positionX = 50;
         this.positionY = 0;
         this.width = 10;
-        this.height = 10;
+        this.height = 13;
         this.domElement = null;
 
         this.createDomElement();
@@ -25,33 +81,36 @@ class Player {
             return;
         }
         else {
-        this.positionX --;
-        this.domElement.style.left = this.positionX + "vw";
+            this.positionX--;
+            this.domElement.style.left = this.positionX + "vw";
         }
     }
 
     moveRight() {
-        if (this.positionX === 100 - player.width) {
+        if (this.positionX === 100 - this.width) {
             return;
         }
         else {
-        this.positionX ++;
-        this.domElement.style.left = this.positionX + "vw";
+            this.positionX++;
+            this.domElement.style.left = this.positionX + "vw";
         }
     }
 }
-function generateRandomNumber(min, max) {
-    return (Math.random() * (max - min + 1)) + min;
-}
+
+
 class Obstacle {
     constructor() {
-        this.positionX = generateRandomNumber(0, 70); // change to be minus width
+        this.positionX = this.generateRandomNumber(0, 70); // change to be minus width
         this.positionY = 100;
         this.width = 10;
-        this.height = 10; 
+        this.height = 10;
         this.domElement = null;
 
-        this.createDomElement();        
+        this.createDomElement();
+    }
+
+    generateRandomNumber(min, max) {
+        return (Math.random() * (max - min + 1)) + min;
     }
 
     createDomElement() {
@@ -72,47 +131,12 @@ class Obstacle {
     moveDown() {
         this.positionY--
         this.domElement.style.bottom = this.positionY + "vh";
+    }
+
+
 }
 
 
-}
-
-const player = new Player();
-const obstaclesArr = []; // will store array of instances of the class Obstacle
-
-setInterval(() => {
-    const newObstacle = new Obstacle();
-    obstaclesArr.push(newObstacle)
-}, 2000);
-
-setInterval(() => {
-    obstaclesArr.forEach((obstacleInstance) => {
-        obstacleInstance.moveDown()
-
-        if (
-            obstacleInstance.positionX < player.positionX + player.width &&
-            obstacleInstance.positionX + obstacleInstance.width > player.positionX &&
-            obstacleInstance.positionY < player.positionY + player.height &&
-            obstacleInstance.height + obstacleInstance.positionY > player.positionY) {
-            console.log("Well done! You set it on fire!")
-        }
-
-        if (obstacleInstance.positionY < 0 - obstacleInstance.height) {
-            obstacleInstance.domElement.remove()
-            obstaclesArr.shift(obstacleInstance); 
-        }
-
-    });
-}, 60)
-
-
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") {
-        player.moveLeft()
-    }
-    else if (e.key === "ArrowRight") {
-        player.moveRight()
-    }
-})
+const game = new Game;
+game.start()
 
